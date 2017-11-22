@@ -10,6 +10,10 @@ var fs = require('fs'),
     tar = require('tar'),
     request = require('request');
 
+function normalizePathKey(str) {
+    return (str || '').replace(/(^\/)|(\/$)/g, ''); // remove leading/trailing slashes)
+}
+
 /**
  * Installs the tar archive dependencies listed in config.
  * See README.md for more information and examples.
@@ -31,6 +35,7 @@ var installTarDependencies = function(config, destKey) {
     var path = require('path'),
         deps = config.tarDependencies || {};
 
+    destKey = normalizePathKey(destKey);
     Object.keys(deps).forEach(function(key) {
         if (destKey && key !== destKey) {
             return;
@@ -68,6 +73,7 @@ var installTarDependencies = function(config, destKey) {
 var addArchive = function(config, url, destDir, strip) {
     config = config || {};
     strip = strip === undefined ? 1 : Number(strip);
+    destDir = normalizePathKey(destDir);
     config.tarDependencies = config.tarDependencies || {};
     var tarConfig = Object.assign({}, config.tarDependencies[destDir]);
     tarConfig.url = url;
@@ -87,6 +93,7 @@ var addArchive = function(config, url, destDir, strip) {
 var removeArchive = function(config, destDir) {
     config = config || {};
     config.tarDependencies = config.tarDependencies || {};
+    destDir = normalizePathKey(destDir);
 
     if (destDir) {
         delete config.tarDependencies[destDir];
