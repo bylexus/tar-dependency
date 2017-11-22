@@ -1,0 +1,66 @@
+{
+    "name": "tar-dependency",
+    "version": "0.0.1",
+    "description": "Fetches .tar(.gz) archives defined in package.json and extracts them to a specific location.",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "author": "Alexander Schenkel",
+    "email": "alex@alexi.ch",
+    "license": "MIT",
+    "dependencies": {
+        "commander": "^2.11.0",
+        "jsonfile": "^4.0.0",
+        "request": "^2.83.0",
+        "rimraf": "^2.6.2",
+        "tar": "^4.0.2"
+    },
+    "devDependencies": {
+        "eslint": "^4.11.0",
+        "eslint-config-prettier": "^2.8.0",
+        "eslint-plugin-prettier": "^2.3.1",
+        "prettier": "^1.8.2"
+    },
+    "bin": {
+        "git-dependency": "bin/cmd.js"
+    },
+    "eslintConfig": {
+        "root": true,
+        "extends": "prettier",
+        "env": {
+            "node": true
+        },
+        "plugins": [
+            "prettier"
+        ],
+        "rules": {
+            "prettier/prettier": [
+                "error",
+                {
+                    "singleQuote": true,
+                    "tabWidth": 4,
+                    "printWidth": 120
+                }
+            ],
+            "no-unused-vars": [
+                "error",
+                {
+                    "vars": "all",
+                    "args": "none"
+                }
+            ],
+            "semi": [
+                "error",
+                "always"
+            ],
+            "curly": "error",
+            "eqeqeq": "error",
+            "no-eval": "error",
+            "no-loop-func": "error",
+            "radix": "error",
+            "comma-dangle": "error",
+            "no-undef": "error"
+        }
+    }
+}
