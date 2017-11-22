@@ -26,7 +26,7 @@ var readPackageConfig = function() {
 
 var packageConf = readPackageConfig();
 
-program.version(packageConf.version).option('-w, --working-dir <path>', 'use specified working directory');
+program.option('-w, --working-dir <path>', 'use specified working directory');
 
 program
     .command('install')
