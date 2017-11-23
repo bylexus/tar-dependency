@@ -1,6 +1,6 @@
 {
     "name": "tar-dependency",
-    "version": "0.0.2",
+    "version": "0.0.3",
     "description": "Fetches .tar(.gz) archives defined in package.json and extracts them to a specific location.",
     "main": "index.js",
     "scripts": {
@@ -12,6 +12,7 @@
     "dependencies": {
         "commander": "^2.11.0",
         "jsonfile": "^4.0.0",
+        "mkdirp": "^0.5.1",
         "request": "^2.83.0",
         "rimraf": "^2.6.2",
         "tar": "^4.0.2"

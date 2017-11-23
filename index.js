@@ -3,10 +3,10 @@
  *
  * (c) 2017 alex@alexi.ch
  */
-var fs = require('fs'),
-    path = require('path'),
+var path = require('path'),
     jsonfile = require('jsonfile'),
     rimraf = require('rimraf'),
+    mkdirp = require('mkdirp'),
     tar = require('tar'),
     request = require('request');
 
@@ -50,7 +50,7 @@ var installTarDependencies = function(config, destKey) {
         }
         console.log('tar package: ' + url + ' => ' + dest);
         rimraf.sync(fullOutdir);
-        fs.mkdirSync(fullOutdir);
+        mkdirp.sync(fullOutdir);
 
         request(url).pipe(
             tar.x({
