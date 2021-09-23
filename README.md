@@ -14,6 +14,11 @@ It allows adding non-git / non-npm dependencies to be installed as part of the p
 
 We created this tool to replace [Bower](https://bower.io/), where cannot use npm/yarn for non-JS/Web repositories.
 
+Requirements
+-------------
+
+This library needs at least NodeJS >= 12.20.0
+
 Installation
 -------------
 

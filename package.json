@@ -10,30 +10,38 @@
     "email": "alex@alexi.ch",
     "license": "MIT",
     "dependencies": {
-        "commander": "^2.11.0",
-        "jsonfile": "^4.0.0",
-        "mkdirp": "^0.5.1",
-        "request": "^2.83.0",
-        "rimraf": "^2.6.2",
-        "tar": "^4.0.2"
+        "commander": "^8.2.0",
+        "jsonfile": "^6.1.0",
+        "mkdirp": "^1.0.4",
+        "node-fetch": "^2.6.5",
+        "rimraf": "^3.0.2",
+        "tar": "^6.1.11"
     },
     "devDependencies": {
-        "eslint": "^4.11.0",
-        "eslint-config-prettier": "^2.8.0",
-        "eslint-plugin-prettier": "^2.3.1",
-        "prettier": "^1.8.2"
+        "eslint": "^7.32.0",
+        "eslint-config-prettier": "^8.3.0",
+        "eslint-plugin-json": "^3.1.0",
+        "eslint-plugin-prettier": "^4.0.0",
+        "prettier": "^2.4.1"
     },
     "bin": {
         "tar-dependency": "bin/cmd.js"
     },
     "eslintConfig": {
         "root": true,
-        "extends": "prettier",
+        "parserOptions": {
+            "ecmaVersion": 2017
+        },
+        "extends": [
+            "prettier",
+            "plugin:json/recommended"
+        ],
         "env": {
             "node": true
         },
         "plugins": [
-            "prettier"
+            "prettier",
+            "json"
         ],
         "rules": {
             "prettier/prettier": [
@@ -63,5 +71,13 @@
             "comma-dangle": "error",
             "no-undef": "error"
         }
+    },
+    "prettier": {
+        "printWidth": 120,
+        "tabWidth": 4,
+        "useTabs": false,
+        "semi": true,
+        "singleQuote": true,
+        "trailingComma": "none"
     }
 }

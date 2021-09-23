@@ -7,31 +7,31 @@
  * (c) 2017 alex@alexi.ch
  */
 
-var lib = require('../index.js');
-var jsonfile = require('jsonfile');
-var path = require('path');
-var program = require('commander');
+const lib = require('../index.js');
+const jsonfile = require('jsonfile');
+const path = require('path');
+const program = require('commander');
 
-var setWorkingDir = function(dir) {
+function setWorkingDir(dir) {
     process.chdir(dir);
-};
+}
 
-var packageConfigPath = function() {
+function packageConfigPath() {
     return path.join(process.cwd(), 'package.json');
-};
+}
 
-var readPackageConfig = function() {
+function readPackageConfig() {
     return jsonfile.readFileSync(packageConfigPath());
-};
+}
 
-var packageConf = readPackageConfig();
+const packageConf = readPackageConfig();
 
 program.option('-w, --working-dir <path>', 'use specified working directory');
 
 program
     .command('install')
     .description('installs / updates tar dependencies defined in package.json')
-    .action(function() {
+    .action(async function () {
         setWorkingDir(this.parent.workingDir || process.cwd());
         lib.install(packageConf);
     });
@@ -45,12 +45,12 @@ program
     .description(
         'Fetches the tar from <url> and extracts it to <dest-dir>. Note that dest-dir SHOULD be relative to package.json. Updates package.json.'
     )
-    .action(function(url, destDir) {
+    .action(async function (url, destDir) {
         var strip = this.strip === undefined ? 1 : Number(this.strip);
         setWorkingDir(this.parent.workingDir || process.cwd());
         lib.add(packageConf, url, destDir, strip);
         lib.saveConfig(packageConf, packageConfigPath());
-        lib.install(packageConf, destDir);
+        await lib.install(packageConf, destDir);
     });
 
 program
@@ -58,14 +58,16 @@ program
     .description(
         'Removes an installed/extracted archive from disk as well as from package.json. Please make sure dest-dir identifies an entry in package.json.'
     )
-    .action(function(name) {
+    .action(async function (name) {
         setWorkingDir(this.parent.workingDir || process.cwd());
         lib.remove(packageConf, name);
         lib.saveConfig(packageConf, packageConfigPath());
     });
 
-program.parse(process.argv);
+(async function () {
+    await program.parseAsync(process.argv);
 
-if (!process.argv.slice(2).length) {
-    program.help();
-}
+    if (!process.argv.slice(2).length) {
+        program.help();
+    }
+})();

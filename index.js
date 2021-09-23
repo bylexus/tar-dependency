@@ -3,12 +3,13 @@
  *
  * (c) 2017 alex@alexi.ch
  */
-var path = require('path'),
+const path = require('path'),
     jsonfile = require('jsonfile'),
     rimraf = require('rimraf'),
     mkdirp = require('mkdirp'),
     tar = require('tar'),
-    request = require('request');
+    fetch = require('node-fetch'),
+    util = require('util');
 
 function normalizePathKey(str) {
     return (str || '').replace(/(^\/)|(\/$)/g, ''); // remove leading/trailing slashes)
@@ -27,40 +28,35 @@ function normalizePathKey(str) {
  *   ...
  * }
  *
- * Note that this function:
- * - runs SYNCHRONOUS intentionally
+ * This function returns a promise that resolves when all dependencies are installed.
  */
-var installTarDependencies = function(config, destKey) {
+async function installTarDependencies(config, destKey) {
     config = config || {};
-    var path = require('path'),
-        deps = config.tarDependencies || {};
+    const deps = config.tarDependencies || {};
 
     destKey = normalizePathKey(destKey);
-    Object.keys(deps).forEach(function(key) {
+    for (const key of Object.keys(deps)) {
         if (destKey && key !== destKey) {
             return;
         }
-        var dest = key;
-        var fullOutdir = path.join(process.cwd(), dest);
-        var url = deps[key].url;
-        var strip = deps[key].strip;
+        const fullOutdir = path.join(process.cwd(), key);
+        const url = deps[key].url;
+        const strip = deps[key].strip === undefined ? 1 : Number(deps[key].strip);
 
-        if (strip === undefined) {
-            strip = 1;
-        }
-        console.log('tar package: ' + url + ' => ' + dest);
-        rimraf.sync(fullOutdir);
-        mkdirp.sync(fullOutdir);
+        console.log('tar package: ' + url + ' => ' + key);
+        await util.promisify(rimraf)(fullOutdir);
+        await mkdirp(fullOutdir);
 
-        request(url).pipe(
+        const response = await fetch(url);
+        response.body.pipe(
             tar.x({
                 strip: strip,
                 C: fullOutdir,
                 sync: true
             })
         );
-    });
-};
+    }
+}
 
 /*
  * Adds an archive to the list of dependencies, but does NOT install it:
@@ -70,7 +66,7 @@ var installTarDependencies = function(config, destKey) {
  *
  * The given config object is updated.
  */
-var addArchive = function(config, url, destDir, strip) {
+function addArchive(config, url, destDir, strip) {
     config = config || {};
     strip = strip === undefined ? 1 : Number(strip);
     destDir = normalizePathKey(destDir);
@@ -79,7 +75,7 @@ var addArchive = function(config, url, destDir, strip) {
     tarConfig.url = url;
     tarConfig.strip = strip;
     config.tarDependencies[destDir] = tarConfig;
-};
+}
 
 /*
  * Removes an archive identified by given path key. It removes the archive on the disk
@@ -90,7 +86,7 @@ var addArchive = function(config, url, destDir, strip) {
  *
  * The given config object is updated.
  */
-var removeArchive = function(config, destDir) {
+async function removeArchive(config, destDir) {
     config = config || {};
     config.tarDependencies = config.tarDependencies || {};
     destDir = normalizePathKey(destDir);
@@ -99,10 +95,9 @@ var removeArchive = function(config, destDir) {
         delete config.tarDependencies[destDir];
     }
 
-    var fullOutdir = path.join(process.cwd(), destDir);
-
-    rimraf.sync(fullOutdir);
-};
+    const fullOutdir = path.join(process.cwd(), destDir);
+    await util.promisify(rimraf)(fullOutdir);
+}
 
 /*
  * Saves the given config object as json to a file. Normally, 'file'
@@ -110,10 +105,10 @@ var removeArchive = function(config, destDir) {
  *
  * See README.md for more information and examples.
  */
-var saveConf = function(config, file) {
+async function saveConf(config, file) {
     config = config || {};
-    jsonfile.writeFileSync(file, config, { spaces: 2 });
-};
+    await util.promisify(jsonfile.writeFileSync)(file, config, { spaces: 2 });
+}
 
 module.exports = {
     install: installTarDependencies,
