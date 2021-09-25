@@ -1,31 +1,27 @@
-tar-dependency
-======================
+# tar-dependency
 
 > Installs tar archives defined in package.json to a directory
 
-This small command line tool has the following purpose:
+This is a small helper tool with the following purpose:
 
 * It fetches / extracts .tar(.gz) archives into a local folder
 * It stores the installed archive infos in `package.json`
 
-This tool is mainly used during development: The archives needed during development / as part of the package can
+This tool is mainly used for fetching git repositories as tar archives from github / gitlab: The archives needed during development / as part of the package can
 be defined in `package.json`, so this information is part of the main repo and can be distributed to source control.
-It allows adding non-git / non-npm dependencies to be installed as part of the package management.
+It allows adding non-npm dependencies to be installed as part of the package management.
 
-We created this tool to replace [Bower](https://bower.io/), where cannot use npm/yarn for non-JS/Web repositories.
+We created this tool to replace [Bower](https://bower.io/), where packages are not available as npm/yarn packages.
 
-Requirements
--------------
+## Requirements
 
 This library needs at least NodeJS >= 12.20.0
 
-Installation
--------------
+## Installation
 
 `npm install --save-dev tar-dependency`
 
-Usage
------
+## Usage
 
 *Note*: This tool assumes a `package.json` in the current working directory.
 
@@ -95,6 +91,4 @@ and then install them with
 
 `tar-dependency install`
 
-
-
-(c) 2017 alex@alexi.ch
+(c) 2017-2021 alex@alexi.ch
