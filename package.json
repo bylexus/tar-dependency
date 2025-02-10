@@ -1,83 +1,49 @@
 {
-    "name": "tar-dependency",
-    "version": "0.1.0",
-    "description": "Fetches .tar(.gz) archives defined in package.json and extracts them to a specific location.",
-    "main": "index.js",
-    "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1"
+  "name": "tar-dependency",
+  "version": "0.1.0",
+  "description": "Fetches .tar(.gz) archives defined in package.json and extracts them to a specific location.",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Alexander Schenkel",
+  "email": "alex@alexi.ch",
+  "license": "MIT",
+  "dependencies": {
+    "commander": "^13.1.0",
+    "jsonfile": "^6.1.0",
+    "mkdirp": "^3.0.1",
+    "node-fetch": "^2.6.5",
+    "rimraf": "^6.0.1",
+    "tar": "^7.4.3"
+  },
+  "devDependencies": {
+    "eslint": "^9.20.0",
+    "eslint-config-prettier": "^10.0.1",
+    "eslint-plugin-json": "^4.0.1",
+    "eslint-plugin-prettier": "^5.2.3",
+    "prettier": "^3.5.0"
+  },
+  "bin": {
+    "tar-dependency": "bin/cmd.js"
+  },
+  "prettier": {
+    "printWidth": 120,
+    "tabWidth": 4,
+    "useTabs": false,
+    "semi": true,
+    "singleQuote": true,
+    "trailingComma": "none"
+  },
+  "tarDependencies": {
+    "packages/fontawesome": {
+      "url": "http://reposerver.kp.local/lib/fontawesome-pro-6.7.2-web.tar.gz",
+      "strip": 1
     },
-    "author": "Alexander Schenkel",
-    "email": "alex@alexi.ch",
-    "license": "MIT",
-    "dependencies": {
-        "commander": "^8.2.0",
-        "jsonfile": "^6.1.0",
-        "mkdirp": "^1.0.4",
-        "node-fetch": "^2.6.5",
-        "rimraf": "^3.0.2",
-        "tar": "^6.1.11"
-    },
-    "devDependencies": {
-        "eslint": "^7.32.0",
-        "eslint-config-prettier": "^8.3.0",
-        "eslint-plugin-json": "^3.1.0",
-        "eslint-plugin-prettier": "^4.0.0",
-        "prettier": "^2.4.1"
-    },
-    "bin": {
-        "tar-dependency": "bin/cmd.js"
-    },
-    "eslintConfig": {
-        "root": true,
-        "parserOptions": {
-            "ecmaVersion": 2017
-        },
-        "extends": [
-            "prettier",
-            "plugin:json/recommended"
-        ],
-        "env": {
-            "node": true
-        },
-        "plugins": [
-            "prettier",
-            "json"
-        ],
-        "rules": {
-            "prettier/prettier": [
-                "error",
-                {
-                    "singleQuote": true,
-                    "tabWidth": 4,
-                    "printWidth": 120
-                }
-            ],
-            "no-unused-vars": [
-                "error",
-                {
-                    "vars": "all",
-                    "args": "none"
-                }
-            ],
-            "semi": [
-                "error",
-                "always"
-            ],
-            "curly": "error",
-            "eqeqeq": "error",
-            "no-eval": "error",
-            "no-loop-func": "error",
-            "radix": "error",
-            "comma-dangle": "error",
-            "no-undef": "error"
-        }
-    },
-    "prettier": {
-        "printWidth": 120,
-        "tabWidth": 4,
-        "useTabs": false,
-        "semi": true,
-        "singleQuote": true,
-        "trailingComma": "none"
+    "packages/php-injector": {
+      "url": "https://github.com/bylexus/php-injector/archive/0.0.8.tar.gz",
+      "strip": 1
     }
+  }
 }

@@ -4,13 +4,14 @@
  *
  * It assumes a package.json in the actual working directory.
  *
- * (c) 2017 alex@alexi.ch
+ * (c) 2017-2025 alex@alexi.ch
  */
 
-const lib = require('../index.js');
-const jsonfile = require('jsonfile');
-const path = require('path');
-const program = require('commander');
+import process from 'node:process';
+import lib from '../index.js';
+import jsonfile from 'jsonfile';
+import path from 'path';
+import { program } from 'commander';
 
 function setWorkingDir(dir) {
     process.chdir(dir);

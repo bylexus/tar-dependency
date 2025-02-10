@@ -1,15 +1,16 @@
 /**
  * tar-dependency module
  *
- * (c) 2017 alex@alexi.ch
+ * (c) 2017-2025 alex@alexi.ch
  */
-const path = require('path'),
-    jsonfile = require('jsonfile'),
-    rimraf = require('rimraf'),
-    mkdirp = require('mkdirp'),
-    tar = require('tar'),
-    fetch = require('node-fetch'),
-    util = require('util');
+import process from 'node:process';
+import console from 'node:console';
+import path from 'path';
+import jsonfile from 'jsonfile';
+import { rimraf } from 'rimraf';
+import { mkdirp } from 'mkdirp';
+import * as tar from 'tar';
+import fetch from 'node-fetch';
 
 function normalizePathKey(str) {
     return (str || '').replace(/(^\/)|(\/$)/g, ''); // remove leading/trailing slashes)
@@ -44,7 +45,7 @@ async function installTarDependencies(config, destKey) {
         const strip = deps[key].strip === undefined ? 1 : Number(deps[key].strip);
 
         console.log('tar package: ' + url + ' => ' + key);
-        await util.promisify(rimraf)(fullOutdir);
+        await rimraf(fullOutdir);
         await mkdirp(fullOutdir);
 
         const response = await fetch(url);
@@ -96,7 +97,7 @@ async function removeArchive(config, destDir) {
     }
 
     const fullOutdir = path.join(process.cwd(), destDir);
-    await util.promisify(rimraf)(fullOutdir);
+    await rimraf(fullOutdir);
 }
 
 /*
@@ -107,10 +108,10 @@ async function removeArchive(config, destDir) {
  */
 async function saveConf(config, file) {
     config = config || {};
-    await util.promisify(jsonfile.writeFileSync)(file, config, { spaces: 2 });
+    await jsonfile.writeFile(file, config, { spaces: 2 });
 }
 
-module.exports = {
+export default {
     install: installTarDependencies,
     add: addArchive,
     remove: removeArchive,

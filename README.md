@@ -15,7 +15,7 @@ We created this tool to replace [Bower](https://bower.io/), where packages are n
 
 ## Requirements
 
-This library needs at least NodeJS >= 12.20.0
+This library needs at least NodeJS >= 20
 
 ## Installation
 
@@ -91,4 +91,16 @@ and then install them with
 
 `tar-dependency install`
 
-(c) 2017-2021 alex@alexi.ch
+## Changelog
+
+### 0.2.0 - Feb 2025
+
+* [breaking] Updated to NodeJS >= 20 with ES Modules
+* [breaking] You need a NodeJS version that supports ES Modules (~ V.14.0)
+* Updated dependant packages
+
+### 0.1.0
+
+Initial release
+
+(c) 2017-2025 alex@alexi.ch
