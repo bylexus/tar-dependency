@@ -4,10 +4,10 @@ import json from 'eslint-plugin-json';
 // eslint.config.js
 export default [
     eslintPluginPrettierRecommended,
-	{
-		files: ["**/*.json"],
-		...json.configs["recommended"]
-	  },
+    {
+        files: ['**/*.json'],
+        ...json.configs['recommended']
+    },
     {
         // extends: ['prettier', 'plugin:json/recommended'],
         languageOptions: {
