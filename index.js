@@ -31,15 +31,11 @@ function normalizePathKey(str) {
  *
  * This function returns a promise that resolves when all dependencies are installed.
  */
-async function installTarDependencies(config, destKey) {
+async function installTarDependencies(config) {
     config = config || {};
     const deps = config.tarDependencies || {};
 
-    destKey = normalizePathKey(destKey);
     for (const key of Object.keys(deps)) {
-        if (destKey && key !== destKey) {
-            return;
-        }
         const fullOutdir = path.join(process.cwd(), key);
         const rawUrl = deps[key].url;
         const url = rawUrl.replaceAll(/\$\{(\w+)\}/g, (_, name) => process.env[name] ?? '');
