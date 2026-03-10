@@ -91,7 +91,36 @@ and then install them with
 
 `tar-dependency install`
 
+### Authentication / Private repositories
+
+URLs support `${ENV_VAR}` placeholders, which are expanded from environment variables at install time. The values are URL-encoded before substitution, so they are safe to use in query parameters. This keeps secrets out of `package.json` and version control.
+
+For example, to authenticate against a private GitLab instance:
+
+```json
+{
+  "tarDependencies": {
+    "components/components-ext": {
+      "url": "https://gitlab.kadenpartner.ch/kp/extjs/repository/4.2.6-min/archive.tgz?private_token=${KP_GITLAB_TOKEN}",
+      "strip": 1
+    }
+  }
+}
+```
+
+Store the token in your shell environment (e.g. `~/.zshenv` or `~/.zshrc`):
+
+```bash
+export KP_GITLAB_TOKEN=glpat-xxxx
+```
+
+The raw URL (with the placeholder, not the expanded value) is printed to the console, so tokens are never leaked in logs.
+
 ## Changelog
+
+### 0.3.0 - Mar 2026
+
+* Added `${ENV_VAR}` placeholder support in URLs for authentication against private registries
 
 ### 0.2.0 - Feb 2025
 
