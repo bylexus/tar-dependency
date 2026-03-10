@@ -37,10 +37,11 @@ async function installTarDependencies(config) {
 
     for (const key of Object.keys(deps)) {
         const fullOutdir = path.join(process.cwd(), key);
-        const url = deps[key].url;
+        const rawUrl = deps[key].url;
+        const url = rawUrl.replaceAll(/\$\{(\w+)\}/g, (_, name) => encodeURIComponent(process.env[name] ?? ''));
         const strip = deps[key].strip === undefined ? 1 : Number(deps[key].strip);
 
-        console.log('tar package: ' + url + ' => ' + key);
+        console.log('tar package: ' + rawUrl + ' => ' + key);
         await rimraf(fullOutdir);
         await mkdirp(fullOutdir);
 
