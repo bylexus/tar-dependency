@@ -1,6 +1,6 @@
 {
   "name": "tar-dependency",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Fetches .tar(.gz) archives defined in package.json and extracts them to a specific location.",
   "main": "index.js",
   "type": "module",
@@ -12,11 +12,11 @@
   "license": "MIT",
   "dependencies": {
     "commander": "^13.1.0",
-    "jsonfile": "^6.1.0",
+    "jsonfile": "^6.2.1",
     "mkdirp": "^3.0.1",
     "node-fetch": "^2.6.5",
-    "rimraf": "^6.0.1",
-    "tar": "^7.4.3"
+    "rimraf": "^6.1.3",
+    "tar": "^7.5.16"
   },
   "devDependencies": {
     "eslint": "^9.20.0",
