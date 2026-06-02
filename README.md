@@ -132,4 +132,4 @@ The raw URL (with the placeholder, not the expanded value) is printed to the con
 
 Initial release
 
-(c) 2017-2025 alex@alexi.ch
+(c) 2017-2026 alex@alexi.ch
